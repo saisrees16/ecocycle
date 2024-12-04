@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Join the Circular Economy Marketplace to reduce waste and build a sustainable community. Buy, sell, repair, and trade in one platform.">
+    <title>Circular Economy Marketplace</title>
+    <style>
+        :root {
+            --primary-color: #27ae60;
+            --secondary-color: #2ecc71;
+            --background-color: #f9f9f9;
+            --card-background: #ffffff;
+            --light-text: #ffffff;
+            --dark-text: #333333;
+            --muted-text: #666666;
+            --border-color: #ddd;
+            --box-shadow: rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--dark-text);
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: white;
+            color: black;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            z-index: 1000;
+            box-shadow: 0 2px 5px var(--box-shadow);
+        }
+
+        header nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        header nav a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: bold;
+            transition: color var(--transition-speed);
+        }
+
+        header nav a:hover {
+            color: black;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        h1 {
+            display: flex;
+            font-size: 25px;
+            color: var(--primary-color);
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: center;
+            margin: 0 20px;
+        }
+
+        #first {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            color: black;
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        #first h2 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            color: var(--primary-color);
+            font-family: 'Inter', sans-serif;
+        }
+
+        #first p {
+            font-size: 2rem;
+        }
+
+        #seller-buyer {
+            padding: 2rem 0;
+            background-color: var(--background-color);
+            color: var(--dark-text);
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px var(--box-shadow);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 4px 10px var(--box-shadow);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            color: var(--muted-text);
+            font-size: 1rem;
+        }
+
+        /* Modal for Repair Services */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            /* Increased width for better space */
+            max-width: 800px;
+            /* Max width */
+            background-color: var(--light-text);
+            color: var(--dark-text);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px var(--box-shadow);
+            padding: 2rem;
+            z-index: 1000;
+            overflow: hidden;
+            /* Prevent overall scrolling */
+        }
+
+        /* Modal Header */
+        .modal-header {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Form Styling inside Modal */
+        .modal form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            /* Increase gap for better spacing between inputs */
+            max-height: 60vh;
+            /* Limit form height */
+            overflow-y: auto;
+            /* Enable vertical scrolling */
+            padding-right: 1rem;
+            /* Ensure there's space for scrollbar */
+        }
+
+        /* Input, Textarea, and Button Styling */
+        .modal form input,
+        .modal form textarea,
+        .modal form select,
+        .modal form button {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        /* Textarea specific styling */
+        .modal form textarea {
+            resize: vertical;
+            height: 120px;
+            /* Adjust height of textarea for better view */
+        }
+
+        /* Button Styles */
+        .modal form button {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border: none;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+            padding: 1rem;
+            font-weight: bold;
+        }
+
+        .modal form button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .modal-overlay.show {
+            display: block;
+        }
+
+        .modal.show,
+        .modal-overlay.show {
+            display: block;
+        }
+
+        footer {
+            background-color: var(--dark-text);
+            color: var(--light-text);
+            padding: 20px;
+        }
+
+        footer a {
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            header nav {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-start;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>EcoCycle<img src="cycle.png" alt="" style="height: 20px;"></h1>
+        <nav>
+            <a href="#first">Home</a>
+            <a href="#seller-buyer">Second-Hand Goods</a>
+            <a href="#barter">Bartering</a>
+            <a href="#repair">Repairs</a>
+            <a href="#community">Community</a>
+            <a href="#impact">Impact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="first">
+            <h2>EcoCycle <img src="cycle.png" alt="" style="height: 70px; align-self: baseline;"></h2>
+            <p>"Empowering sustainability through reuse, repair, and trade."</p>
+        </section>
+
+        <section id="seller-buyer">
+            <h2>Become a Seller or Buyer</h2>
+            <p>As a user, you can join our marketplace as both a seller and a buyer:</p>
+            <div class="cards">
+                <div class="card" id="sell-card">
+                    <h3>Sell Your Items</h3>
+                    <p>List your second-hand goods and reach potential buyers in your community. It's easy to start!</p>
+                </div>
+                <div class="card" id="buy-card" onclick="window.location.href='products.html';">
+                    <h3>Buy Second-Hand Goods</h3>
+                    <p>Explore a variety of gently-used items available at affordable prices. Sustainable shopping made
+                        simple!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="repair">
+            <h2>🔧 Repair Services</h2>
+            <div class="cards">
+                <div class="card" id="repair-card">
+                    <h3>Repair & Restore</h3>
+                    <p>Extend the life of your items through community repair services. Offer your skills or find help.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Reduce Waste</h3>
+                    <p>Repairing items prevents unnecessary waste and saves money. Join our repair community!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Selling Items -->
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal" id="sell-modal">
+        <div class="modal-header">Sell Your Item</div>
+        <form>
+            <label for="product-name">Product Name</label>
+            <input type="text" id="product-name" name="product-name" placeholder="e.g., Desk Chair, Lamp" required>
+
+            <label for="product-price">Price</label>
+            <input type="number" id="product-price" name="product-price" placeholder="e.g., 50" required>
+
+            <label for="product-description">Description</label>
+            <textarea id="product-description" name="product-description" rows="4"
+                placeholder="e.g., Black office chair in good condition" required></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="modal-overlay" id="modal-overlay"></div>
+
+    <!-- Modal for Repair Services -->
+    <div class="modal" id="repair-modal">
+        <div class="modal-header">Offer Repair Services</div>
+        <form>
+            <label for="provider-name">Your Name</label>
+            <input type="text" id="provider-name" name="provider-name" placeholder="Enter your full name" required>
+
+            <label for="skill-specialty">Specialty</label>
+            <select id="skill-specialty" name="skill-specialty">
+                <option value="electronics">Electronics</option>
+                <option value="furniture">Furniture</option>
+                <option value="clothing">Clothing</option>
+                <option value="appliances">Appliances</option>
+                <option value="other">Other</option>
+            </select>
+
+            <label for="repair-items">Items You Can Repair</label>
+            <textarea id="repair-items" name="repair-items" placeholder="List the types of items you can repair"
+                required></textarea>
+
+            <label for="services-description">Description of Services</label>
+            <textarea id="services-description" name="services-description"
+                placeholder="Describe the repair services you offer" required></textarea>
+
+            <label for="availability">Availability</label>
+            <input type="text" id="availability" name="availability" placeholder="e.g., Mon-Fri, 9 AM - 5 PM" required>
+
+            <label for="service-area">Service Area</label>
+            <input type="text" id="service-area" name="service-area" placeholder="e.g., City or Region">
+
+            <label for="contact-info">Contact Information</label>
+            <input type="text" id="contact-info" name="contact-info" placeholder="Email or Phone Number" required>
+
+            <label for="pricing">Pricing (Optional)</label>
+            <input type="text" id="pricing" name="pricing" placeholder="e.g., $20/hour or fixed rate per item">
+
+            <button type="submit">Submit Repair Service</button>
+        </form>
+    </div>
+
+    <script>
+        // Modal for "Sell Your Items"
+        const sellCard = document.getElementById('sell-card');
+        const sellModal = document.getElementById('sell-modal');
+        const modalOverlay = document.getElementById('modal-overlay');
+
+        sellCard.addEventListener('click', () => {
+            sellModal.classList.add('show');
+            modalOverlay.classList.add('show');
+        });
+
+        // Hide modal when clicking outside
+        modalOverlay.addEventListener('click', () => {
+            sellModal.classList.remove('show');
+            repairModal.classList.remove('show');
+            modalOverlay.classList.remove('show');
+        });
+
+        // Modal for "Repair & Restore"
+        const repairCard = document.getElementById('repair-card');
+        const repairModal = document.getElementById('repair-modal');
+
+        // Open modal when the "Repair" card is clicked
+        repairCard.addEventListener('click', () => {
+            repairModal.classList.add('show');
+            modalOverlay.classList.add('show');
+        });
+
+        // Close modal when the overlay is clicked
+        modalOverlay.addEventListener('click', () => {
+            repairModal.classList.remove('show');
+            modalOverlay.classList.remove('show');
+        });
+
+        // Show modal on card click
+        sellCard.addEventListener('click', () => {
+            sellModal.classList.add('show');
+            modalOverlay.classList.add('show');
+        });
+
+        repairCard.addEventListener('click', () => {
+            repairModal.classList.add('show');
+            modalOverlay.classList.add('show');
+        });
+
+        // Hide modal on overlay click
+        modalOverlay.addEventListener('click', () => {
+            sellModal.classList.remove('show');
+            repairModal.classList.remove('show');
+            modalOverlay.classList.remove('show');
+        });
+    </script>
+
+    <footer>
+        <p>&copy; 2024 Circular Economy Marketplace | Designed with ❤️ for a sustainable future.</p>
+    </footer>
+</body>
+
+</html>

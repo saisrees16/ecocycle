@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Circular Economy Marketplace</title>
+    <style>
+        :root {
+            --primary-color: #27ae60;
+            --secondary-color: #2ecc71;
+            --background-color: #f9f9f9;
+            --card-background: #ffffff;
+            --light-text: #ffffff;
+            --dark-text: #333333;
+            --muted-text: #666666;
+            --border-color: #ddd;
+            --box-shadow: rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--dark-text);
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        header {
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: var(--light-text);
+            text-decoration: none;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-bar select, 
+        .filter-bar input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            background-color: var(--card-background);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .product-card img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .product-card h3 {
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+            color: #27ae60;
+        }
+
+        .product-card p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .product-card span {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Second-Hand Goods</h1>
+    <a href="index.html">Back to Home</a>
+</header>
+
+<main>
+    <div class="filter-bar">
+        <select id="category-filter">
+            <option value="all">All Categories</option>
+            <option value="electronics">Electronics</option>
+            <option value="furniture">Furniture</option>
+            <option value="clothing">Clothing</option>
+        </select>
+
+        <select id="sort-filter">
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+        </select>
+
+        <input type="text" id="search-bar" placeholder="Search Products">
+    </div>
+
+    <div class="products-grid" id="products-grid">
+        <!-- Products will be dynamically generated here -->
+    </div>
+</main>
+
+<script>
+    const products = [
+        { id: 1, name: "Laptop", category: "electronics", price: 500, image: "https://via.placeholder.com/150" },
+        { id: 2, name: "Sofa", category: "furniture", price: 300, image: "https://via.placeholder.com/150" },
+        { id: 3, name: "Jacket", category: "clothing", price: 50, image: "https://via.placeholder.com/150" },
+        { id: 4, name: "Smartphone", category: "electronics", price: 400, image: "https://via.placeholder.com/150" },
+        { id: 5, name: "Dining Table", category: "furniture", price: 700, image: "https://via.placeholder.com/150" }
+    ];
+
+    const grid = document.getElementById("products-grid");
+    const categoryFilter = document.getElementById("category-filter");
+    const sortFilter = document.getElementById("sort-filter");
+    const searchBar = document.getElementById("search-bar");
+
+    function displayProducts(filteredProducts) {
+        grid.innerHTML = "";
+        filteredProducts.forEach(product => {
+            const card = `<div class="product-card">
+                <img src="${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p>Category: ${product.category}</p>
+                <p>Price: <span>$${product.price}</span></p>
+            </div>`;
+            grid.innerHTML += card;
+        });
+    }
+
+    function filterAndSortProducts() {
+        let filtered = products.filter(product => 
+            categoryFilter.value === "all" || product.category === categoryFilter.value
+        );
+
+        filtered = filtered.filter(product =>
+            product.name.toLowerCase().includes(searchBar.value.toLowerCase())
+        );
+
+        if (sortFilter.value === "price-asc") {
+            filtered.sort((a, b) => a.price - b.price);
+        } else if (sortFilter.value === "price-desc") {
+            filtered.sort((a, b) => b.price - a.price);
+        }
+
+        displayProducts(filtered);
+    }
+
+    categoryFilter.addEventListener("change", filterAndSortProducts);
+    sortFilter.addEventListener("change", filterAndSortProducts);
+    searchBar.addEventListener("input", filterAndSortProducts);
+
+    // Initial display
+    displayProducts(products);
+</script>
+</body>
+</html>
