@@ -9,7 +9,7 @@
     <title>Circular Economy Marketplace</title>
     <style>
         :root {
-            --primary-color: #27ae60;
+            --primary-color: #8CC665;
             --secondary-color: #2ecc71;
             --background-color: #f9f9f9;
             --card-background: #ffffff;
@@ -53,12 +53,20 @@
 
         header nav a {
             text-decoration: none;
-            color: var(--primary-color);
+            color: black;
             font-weight: bold;
             transition: color var(--transition-speed);
         }
 
         header nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .eco {
+            color: var(--primary-color);
+        }
+
+        .cycle {
             color: black;
         }
 
@@ -94,7 +102,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: white;
+            background-color: var(--background-color);
             color: black;
             text-align: center;
             padding: 0 2rem;
@@ -104,8 +112,8 @@
             font-size: 4rem;
             margin-bottom: 1rem;
             display: flex;
-            color: var(--primary-color);
             font-family: 'Inter', sans-serif;
+            align-items: center;
         }
 
         #first p {
@@ -122,19 +130,28 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin: 2rem auto;
+            margin-left: 150px;
+            margin-right: 150px;
+            display: flex;
+            justify-items: center;
             padding: 0 2rem;
+            align-items: center;
+            justify-content: space-evenly;
+
         }
 
         .card {
             background-color: var(--card-background);
             border: 1px solid var(--border-color);
             border-radius: 8px;
+            height: 150px;
+            width: 450px;
             padding: 1rem;
             text-align: center;
             box-shadow: 0 2px 5px var(--box-shadow);
             transition: transform var(--transition-speed), box-shadow var(--transition-speed);
             cursor: pointer;
+            margin-top: 15px;
         }
 
         .card:hover {
@@ -144,13 +161,26 @@
 
         .card h3 {
             font-size: 1.5rem;
-            color: var(--primary-color);
+            color: black;
             margin-bottom: 0.5rem;
         }
 
         .card p {
-            color: var(--muted-text);
+            color: black;
             font-size: 1rem;
+        }
+
+        button {
+            background-color: #66BB6A;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border: 50px;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
+        button :hover {
+            background-color: var(--primary-color);
         }
 
         /* Modal for Repair Services */
@@ -255,6 +285,7 @@
             background-color: var(--dark-text);
             color: var(--light-text);
             padding: 20px;
+            margin-top: 20px;
         }
 
         footer a {
@@ -281,35 +312,42 @@
 
 <body>
     <header>
-        <h1>EcoCycle<img src="cycle.png" alt="" style="height: 20px;"></h1>
+        <h1 id="logo"><span class="eco">Eco</span><span class="cycle">Cycle<img src="cycle.png" alt=""
+                    style="height: 20px;"></span></h1>
         <nav>
             <a href="#first">Home</a>
             <a href="#seller-buyer">Second-Hand Goods</a>
-            <a href="#barter">Bartering</a>
             <a href="#repair">Repairs</a>
-            <a href="#community">Community</a>
-            <a href="#impact">Impact</a>
+            <a href="impact.html">Impact</a>
+            <a href="contact.html">Contact</a>
+            <a href="login.html">Login</a>
         </nav>
     </header>
 
     <main>
         <section id="first">
-            <h2>EcoCycle <img src="cycle.png" alt="" style="height: 70px; align-self: baseline;"></h2>
+            <h2><span class="eco">Eco</span><span class="cycle">Cycle<img src="cycle.png" alt=""
+                        style="height: 70px; align-self: baseline;"></span></h2>
             <p>"Empowering sustainability through reuse, repair, and trade."</p>
         </section>
 
         <section id="seller-buyer">
             <h2>Become a Seller or Buyer</h2>
-            <p>As a user, you can join our marketplace as both a seller and a buyer:</p>
             <div class="cards">
-                <div class="card" id="sell-card">
+                <div class="card">
                     <h3>Sell Your Items</h3>
                     <p>List your second-hand goods and reach potential buyers in your community. It's easy to start!</p>
+                    <button id="sell-card">
+                        Sell Now
+                    </button>
                 </div>
-                <div class="card" id="buy-card" onclick="window.location.href='products.html';">
+                <div class="card">
                     <h3>Buy Second-Hand Goods</h3>
                     <p>Explore a variety of gently-used items available at affordable prices. Sustainable shopping made
                         simple!</p>
+                    <button id="buy-card" onclick="window.location.href='products.html';">
+                        Buy Now
+                    </button>
                 </div>
             </div>
         </section>
@@ -317,14 +355,21 @@
         <section id="repair">
             <h2>🔧 Repair Services</h2>
             <div class="cards">
-                <div class="card" id="repair-card">
+                <div class="card">
                     <h3>Repair & Restore</h3>
                     <p>Extend the life of your items through community repair services. Offer your skills or find help.
                     </p>
+                    <button id="repair-card">
+                        Offer your repairs
+                    </button>
                 </div>
                 <div class="card">
                     <h3>Reduce Waste</h3>
                     <p>Repairing items prevents unnecessary waste and saves money. Join our repair community!</p>
+                    <button id="reduce-waste-card" onclick="window.location.href='repairs.html';">
+                        Search for repair services
+                    </button>
+
                 </div>
             </div>
         </section>
