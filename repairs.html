@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Find repair services near you to reduce waste and save money.">
+    <title>Repair Services</title>
+    <style>
+        :root {
+            --primary-color: #27ae60;
+            --secondary-color: #2ecc71;
+            --background-color: #f9f9f9;
+            --card-background: #ffffff;
+            --light-text: #ffffff;
+            --dark-text: #333333;
+            --muted-text: #666666;
+            --border-color: #ddd;
+            --box-shadow: rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--dark-text);
+        }
+
+        header {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            background-color: white;
+            box-shadow: 0 2px 5px var(--box-shadow);
+            align-items: center;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filters select, .filters input {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        #category-filter,#price-sort{
+            margin-left: 10px;
+        }
+        .service-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background-color: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 5px var(--box-shadow);
+        }
+
+        .service-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .service-card p {
+            color: var(--muted-text);
+        }
+
+        .service-card .price {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Repair Services Near You</h1>
+        <a href="index.html">Back to Home</a>
+    </header>
+
+    <main>
+        <div class="filters">
+            <div style="display: flex;align-items: flex-start;">
+            <select id="category-filter">
+                <option value="all">All Categories</option>
+                <option value="electronics">Electronics</option>
+                <option value="furniture">Furniture</option>
+                <option value="clothing">Clothing</option>
+                <option value="appliances">Appliances</option>
+            </select>
+            <select id="price-sort">
+                <option value="default">Sort by Price</option>
+                <option value="asc">Low to High</option>
+                <option value="desc">High to Low</option>
+            </select>
+        </div>
+            <input type="text" id="search-bar" placeholder="Search by name or location" style="width:max-content;">
+        </div>
+
+        <div class="service-list" id="service-list">
+            <!-- Sample services with price -->
+            <div class="service-card" data-category="electronics" data-price="50">
+                <h3>John's Electronics Repair</h3>
+                <p>Specialty: Electronics</p>
+                <p>Location: Downtown</p>
+                <p class="price">$50/hour</p>
+            </div>
+            <div class="service-card" data-category="furniture" data-price="30">
+                <h3>Mary's Furniture Fix</h3>
+                <p>Specialty: Furniture</p>
+                <p>Location: Uptown</p>
+                <p class="price">$30/hour</p>
+            </div>
+            <div class="service-card" data-category="clothing" data-price="20">
+                <h3>Stitch & Sew Repairs</h3>
+                <p>Specialty: Clothing</p>
+                <p>Location: Midtown</p>
+                <p class="price">$20/hour</p>
+            </div>
+            <div class="service-card" data-category="appliances" data-price="40">
+                <h3>Appliance Pro</h3>
+                <p>Specialty: Appliances</p>
+                <p>Location: Suburbs</p>
+                <p class="price">$40/hour</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const categoryFilter = document.getElementById('category-filter');
+        const searchBar = document.getElementById('search-bar');
+        const priceSort = document.getElementById('price-sort');
+        const serviceList = document.getElementById('service-list');
+        const serviceCards = Array.from(serviceList.getElementsByClassName('service-card'));
+
+        // Function to filter by category
+        categoryFilter.addEventListener('change', () => {
+            const selectedCategory = categoryFilter.value;
+            serviceCards.forEach(card => {
+                if (selectedCategory === 'all' || card.dataset.category === selectedCategory) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            sortServices();
+        });
+
+        // Function to filter by search input
+        searchBar.addEventListener('input', () => {
+            const query = searchBar.value.toLowerCase();
+            serviceCards.forEach(card => {
+                const content = card.textContent.toLowerCase();
+                if (content.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            sortServices();
+        });
+
+        // Function to sort services by price
+        priceSort.addEventListener('change', sortServices);
+
+        function sortServices() {
+            // Get the current filters
+            const filteredCards = serviceCards.filter(card => card.style.display !== 'none');
+
+            // Sort based on selected option
+            const sortOption = priceSort.value;
+            if (sortOption === 'asc') {
+                filteredCards.sort((a, b) => a.dataset.price - b.dataset.price);
+            } else if (sortOption === 'desc') {
+                filteredCards.sort((a, b) => b.dataset.price - a.dataset.price);
+            }
+
+            // Append sorted cards to the service list
+            filteredCards.forEach(card => serviceList.appendChild(card));
+        }
+    </script>
+</body>
+
+</html>
