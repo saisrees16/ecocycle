@@ -28,17 +28,12 @@
         }
 
         header {
-            padding: 1rem;
-            background-color: var(--primary-color);
-            color: var(--light-text);
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
+            background-color: white;
+            box-shadow: 0 2px 5px var(--box-shadow);
             align-items: center;
-        }
-
-        header a {
-            color: var(--light-text);
-            text-decoration: none;
         }
 
         main {
@@ -105,6 +100,7 @@
 
 <main>
     <div class="filter-bar">
+        <div></div>
         <select id="category-filter">
             <option value="all">All Categories</option>
             <option value="electronics">Electronics</option>
