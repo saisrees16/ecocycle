@@ -42,8 +42,9 @@
 
         .filter-bar {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
 
         .filter-bar select, 
@@ -90,6 +91,18 @@
             font-weight: bold;
             color: #333;
         }
+        button {
+            background-color: #66BB6A;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border: 50px;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
+        button :hover {
+            background-color: var(--primary-color);
+        }
     </style>
 </head>
 <body>
@@ -100,7 +113,7 @@
 
 <main>
     <div class="filter-bar">
-        <div></div>
+        <div>
         <select id="category-filter">
             <option value="all">All Categories</option>
             <option value="electronics">Electronics</option>
@@ -112,7 +125,7 @@
             <option value="price-asc">Price: Low to High</option>
             <option value="price-desc">Price: High to Low</option>
         </select>
-
+    </div>
         <input type="text" id="search-bar" placeholder="Search Products">
     </div>
 
@@ -136,17 +149,27 @@
     const searchBar = document.getElementById("search-bar");
 
     function displayProducts(filteredProducts) {
-        grid.innerHTML = "";
-        filteredProducts.forEach(product => {
-            const card = `<div class="product-card">
-                <img src="${product.image}" alt="${product.name}">
-                <h3>${product.name}</h3>
-                <p>Category: ${product.category}</p>
-                <p>Price: <span>$${product.price}</span></p>
-            </div>`;
-            grid.innerHTML += card;
+    grid.innerHTML = "";
+    filteredProducts.forEach(product => {
+        const card = `<div class="product-card">
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>Category: ${product.category}</p>
+            <p>Price: <span>$${product.price}</span></p>
+            <button class="enquiry-button" data-id="${product.id}">Enquiry</button>
+        </div>`;
+        grid.innerHTML += card;
+    });
+
+    // Add event listeners for enquiry buttons
+    const enquiryButtons = document.querySelectorAll('.enquiry-button');
+    enquiryButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = e.target.dataset.id;
+            alert(`Enquiry for product ID: ${productId}`);
         });
-    }
+    });
+}
 
     function filterAndSortProducts() {
         let filtered = products.filter(product => 
