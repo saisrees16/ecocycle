@@ -53,15 +53,19 @@
             flex-wrap: wrap;
         }
 
-        .filters select, .filters input {
+        .filters select,
+        .filters input {
             padding: 0.5rem;
             border: 1px solid var(--border-color);
             border-radius: 5px;
             font-size: 1rem;
         }
-        #category-filter,#price-sort{
+        
+        #category-filter,
+        #price-sort {
             margin-left: 10px;
         }
+
         .service-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -89,6 +93,18 @@
             font-weight: bold;
             color: var(--primary-color);
         }
+        button {
+            background-color: #66BB6A;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border: 50px;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
+        button :hover {
+            background-color: var(--primary-color);
+        }
     </style>
 </head>
 
@@ -101,19 +117,19 @@
     <main>
         <div class="filters">
             <div style="display: flex;align-items: flex-start;">
-            <select id="category-filter">
-                <option value="all">All Categories</option>
-                <option value="electronics">Electronics</option>
-                <option value="furniture">Furniture</option>
-                <option value="clothing">Clothing</option>
-                <option value="appliances">Appliances</option>
-            </select>
-            <select id="price-sort">
-                <option value="default">Sort by Price</option>
-                <option value="asc">Low to High</option>
-                <option value="desc">High to Low</option>
-            </select>
-        </div>
+                <select id="category-filter">
+                    <option value="all">All Categories</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="furniture">Furniture</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="appliances">Appliances</option>
+                </select>
+                <select id="price-sort">
+                    <option value="default">Sort by Price</option>
+                    <option value="asc">Low to High</option>
+                    <option value="desc">High to Low</option>
+                </select>
+            </div>
             <input type="text" id="search-bar" placeholder="Search by name or location" style="width:max-content;">
         </div>
 
@@ -124,24 +140,28 @@
                 <p>Specialty: Electronics</p>
                 <p>Location: Downtown</p>
                 <p class="price">$50/hour</p>
+                <button class="enquiry-button" data-name="John's Electronics Repair">Enquiry</button>
             </div>
             <div class="service-card" data-category="furniture" data-price="30">
                 <h3>Mary's Furniture Fix</h3>
                 <p>Specialty: Furniture</p>
                 <p>Location: Uptown</p>
                 <p class="price">$30/hour</p>
+                <button class="enquiry-button" data-name="Mary's Furniture Fix">Enquiry</button>
             </div>
             <div class="service-card" data-category="clothing" data-price="20">
                 <h3>Stitch & Sew Repairs</h3>
                 <p>Specialty: Clothing</p>
                 <p>Location: Midtown</p>
                 <p class="price">$20/hour</p>
+                <button class="enquiry-button" data-name="Stitch & Sew Repairs">Enquiry</button>
             </div>
             <div class="service-card" data-category="appliances" data-price="40">
                 <h3>Appliance Pro</h3>
                 <p>Specialty: Appliances</p>
                 <p>Location: Suburbs</p>
                 <p class="price">$40/hour</p>
+                <button class="enquiry-button" data-name="Appliance Pro">Enquiry</button>
             </div>
         </div>
     </main>
@@ -198,6 +218,16 @@
             // Append sorted cards to the service list
             filteredCards.forEach(card => serviceList.appendChild(card));
         }
+
+        // Add event listeners for enquiry buttons
+        const enquiryButtons = document.querySelectorAll('.enquiry-button');
+
+        enquiryButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const serviceName = e.target.dataset.name;
+                alert(`Enquiry for: ${serviceName}`);
+            });
+        });
     </script>
 </body>
 
